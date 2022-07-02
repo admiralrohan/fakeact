@@ -16,3 +16,6 @@ span -> pop
 
 React fragment: You can only pass one element only
 Wrapper component
+
+Hierarchy
+error: can only compile one element (remove wrapper div inside compile function)

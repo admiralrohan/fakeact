@@ -1,4 +1,4 @@
-class Stack {
+class TagStack {
   constructor() {
     this.list = [];
   }
@@ -19,11 +19,12 @@ class Stack {
 }
 
 function getCompiledJSX(jsx) {
+  // Needed to hold all elements
   const compiledJSX = document.createElement("div");
   const splittedJsx = jsx.split("<");
   console.log("Whole:", splittedJsx);
 
-  const stack = new Stack();
+  const stack = new TagStack();
   // Process DOM elements to create DOM object
   splittedJsx.forEach((item) => {
     if (!item) return;
