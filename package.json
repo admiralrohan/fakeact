@@ -1,0 +1,23 @@
+{
+  "name": "fakeact",
+  "version": "1.0.0",
+  "description": "Learn DOM by building React clone",
+  "main": "script.js",
+  "scripts": {
+    "test": "node script"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/admiralrohan/fakeact.git"
+  },
+  "keywords": [
+    "react",
+    "dom"
+  ],
+  "author": "Rohan Gayen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/admiralrohan/fakeact/issues"
+  },
+  "homepage": "https://github.com/admiralrohan/fakeact#readme"
+}
