@@ -31,12 +31,17 @@ function Counter() {
   // 					<button>Click me</button>`;
 
   // return `<div><span>Hi</span><button>Click me</button></div>`;
-  // return `<div>
-  // 					<span>Hi</span>
-  // 					<button>Click me</button>
-  // 				</div>`;
+  // Start
+  return `<div>
+  					<span>
+							Hi
+						</span>
+  					<button>
+							Click me
+						</button>
+  				</div>`;
 
-  return `<div><span>Hi</span><button><span>Click <strong>me</strong></span></button></div>`;
+  // return `<div><span>Hi</span><button><span>Click <strong>me</strong></span></button></div>`;
   // return `<div>
   // 					<span>Hi</span>
   // 					<button>

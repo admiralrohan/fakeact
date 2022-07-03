@@ -27,12 +27,14 @@ class TagStack {
 function getCompiledJSX(root, jsx) {
   // Needed to hold all elements
   // const compiledJSX = document.createElement("div");
+  console.log(jsx.replace("\n", "").replace("\t", ""));
   const splittedJsx = jsx.split("<");
   console.log("Whole:", splittedJsx);
 
   // Acts as pointer
   let currentParent = null;
 
+  // TODO: change to `rawTagNameStack`
   const stack = new TagStack();
   const currentParentStack = new TagStack();
   // currentParentStack.push(compiledJSX);
@@ -48,11 +50,11 @@ function getCompiledJSX(root, jsx) {
     // Otherwise had to manually check it by calling some util function eg. `Utils.isOpeningTag(item)`
     stack.push(item);
     if (stack.isOpeningTag) {
-      const [tagName, children] = stack.current.split(">");
-      console.log("Append ====>", tagName, children);
+      const [tagName, textContent] = stack.current.split(">");
+      // console.log("Append ====>", tagName, textContent);
 
       const tagElement = document.createElement(tagName);
-      tagElement.textContent = children;
+      tagElement.textContent = textContent.trim();
       // Don't push the parent, they will be added to root at script.js
       if (currentParentStack.current)
         currentParentStack.current.appendChild(tagElement);
@@ -73,7 +75,7 @@ function getCompiledJSX(root, jsx) {
       // tagElement.textContent = children;
       // currentParent.appendChild(tagElement);
     }
-    console.log(stack.list, stack.hierarchyLevel);
+    // console.log(stack.list, stack.hierarchyLevel);
   });
 
   return currentParent;
