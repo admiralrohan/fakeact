@@ -26,20 +26,31 @@ function Counter() {
   //   count--;
   // };
 
-  return `<span>Hi</span>`;
+  // return `<span>Hi</span>`;
   // return `<span>Hi</span>
   // 					<button>Click me</button>`;
+
+  // return `<div><span>Hi</span><button>Click me</button></div>`;
   // return `<div>
   // 					<span>Hi</span>
   // 					<button>Click me</button>
   // 				</div>`;
+
+  return `<div><span>Hi</span><button><span>Click <strong>me</strong></span></button></div>`;
+  // return `<div>
+  // 					<span>Hi</span>
+  // 					<button>
+  // 						<span>Click <strong>me</strong></span>
+  // 					</button>
+  // 				</div>`;
+
   // return `<div>Count: ${count}</div>
   //     <button onclick=${decrement}>Decrement</button>
   //     <button onclick=${increment}>Increment</button>`;
 }
 
 const counterComponent = Counter();
-const compiledJSX = getCompiledJSX(counterComponent);
+const compiledJSX = getCompiledJSX(root, counterComponent);
 console.log("Compiled:", compiledJSX);
 root.appendChild(compiledJSX);
 
