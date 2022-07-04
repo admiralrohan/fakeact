@@ -70,18 +70,24 @@ function getCompiledJSX(jsx) {
     rawTagStack.push(string);
     if (rawTagStack.isOpeningTag) {
       const [tagName, textContent] = rawTagStack.current.split(">");
-      // console.log("Append ====>", tagName, textContent);
-
       const tagElement = document.createElement(tagName);
       tagElement.textContent = textContent.trim();
+
       // We won't append the topmost parent of the JSX to anyone here, it will be added to root at script.js
       if (domElementStack.current)
         domElementStack.current.appendChild(tagElement);
       domElementStack.push(tagElement);
     } else {
+      // Adjust stack top
       rawTagStack.pop();
       rawTagStack.pop();
       currentParent = domElementStack.pop();
+
+      // Add the loose text after tag closing
+      const [, textContent] = string.split(">");
+      const textElement = document.createTextNode(textContent.trim());
+      if (domElementStack.current)
+        domElementStack.current.appendChild(textElement);
     }
   });
 

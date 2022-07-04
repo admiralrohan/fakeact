@@ -42,11 +42,12 @@ function Counter() {
   // 					<button>Click me</button>`;
 
   // return `<div><span>Hi</span><button>Click me</button></div>`;
-  return `<div>
-						<p>Start
-						</p>a
+  return `<div>b
+						<p>ptag
+						</p>
+						loose
   					<span>
-							Hi
+							span
 						</span>
   					<button>
 							Click me
