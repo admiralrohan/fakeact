@@ -1,29 +1,36 @@
 # Note: For my rough work
 
-## Plan
+## Requirements
 
 Want to display a simple Counter in HTML
 First only one component, append everything into root div
 Later will think about composing multiple components
 
-Next plan passing on props
-Then reusing the Counter component, initialize with diff initial count
+### Starting limitations:
 
-For blog, first without hierarchy, then hierachy, then onclick listeners
-For now, no parentless elements, eg. use span for strings. Don't pass without parent.
+- No parentless elements, eg. use span for strings. Don't pass without parent
+- No self-closing tags yet eg. img
+
+### Plans:
+
+- JSX without hierarchy (DONE)
+- Remove wrapper div inside compile function (DONE)
+- Also removes spaces(eg. 'div>\n \t\t\t\t\t') - use trim() (DONE)
+- Add hierachy (DOM childs) (DONE)
+- Bug `</p>a` (Loose element after closing tag in same line)
+- Pass on initialCount prop
+- Reuse the Counter component, initialize with diff initial count
+- Add onclick listeners
+- If tagName starts with caps, then call the function. Else it's HTML DOM tag.
+- Bug : You can only pass one element only to ReactElement (Must use wrapper component)
+- Add margin-right (Inline styles)
+- React fragment (Dummy container component)
+
+## Rough work
 
 div
 span -> pop
 /span -> pop
-
-React fragment: You can only pass one element only
-Wrapper component
-
-Also removes spaces(eg. 'div>\n \t\t\t\t\t')
-Hierarchy
-error: can only compile one element (remove wrapper div inside compile function)
-Add margin-right
-onClick
 
 1: "div>"
 2: "span>Hi"

@@ -1,83 +1,89 @@
+/**
+ * To manage DOM Hierarchy
+ */
 class TagStack {
   constructor() {
     this.list = [];
-    // this.hierarchyLevel = 0;
   }
 
   push(item) {
-    // this.hierarchyLevel++;
     this.list.push(item);
   }
   pop() {
-    // this.hierarchyLevel--;
     return this.list.pop();
   }
 
+  /**
+   * How deep are we inside the DOM tree
+   */
   get hierarchyLevel() {
     return this.list.length;
   }
+  /**
+   * Stack top \
+   * The tag in evaluation currently
+   */
   get current() {
     return this.list[this.list.length - 1] ?? null;
   }
+  /**
+   * Is tag in evaluation a opening or closing tag?
+   */
   get isOpeningTag() {
     return this.current ? !(this.current[0] === "/") : false;
   }
 }
 
-function getCompiledJSX(root, jsx) {
-  // Needed to hold all elements
-  // const compiledJSX = document.createElement("div");
-  console.log(jsx.replace("\n", "").replace("\t", ""));
+/**
+ * We parse the JSX expression, and use 2 stacks to build up the DOM tree. \
+ * We would like to create new level of hierarchy if we found 2 consecutive opening tags, and close one level if we found consecutive closing tags. \
+ * This hierarchical system is automatically managed due to inherent nature of stack.
+ *
+ * @param {string} jsx JSX expression
+ * @returns Compiled DOM tree ready to be attached to root node
+ */
+function getCompiledJSX(jsx) {
   const splittedJsx = jsx.split("<");
   console.log("Whole:", splittedJsx);
 
-  // Acts as pointer
+  /**
+   * Acts as pointer, keeps track of DOM node where we should append currently processed node
+   */
   let currentParent = null;
 
-  // TODO: change to `rawTagNameStack`
-  const stack = new TagStack();
-  const currentParentStack = new TagStack();
-  // currentParentStack.push(compiledJSX);
+  /**
+   * Holding raw tag name coming from JSX parsing eg. "button>\n\t\t\tClick me\n\t\t"
+   */
+  const rawTagStack = new TagStack();
+  /**
+   * Holding DOM elements that are used to structure the DOM tree \
+   * Using two separate stacks for easier management
+   */
+  const domElementStack = new TagStack();
 
-  // Process DOM elements to create DOM object
-  splittedJsx.forEach((item) => {
-    if (!item) return;
+  // Process raw DOM elements from JSX to create DOM object
+  splittedJsx.forEach((string) => {
+    if (!string) return;
 
-    // Create hierarchy if consecutive opening tags
-    // Close hierarchy if consecutive closing tags
-
-    // Pushing all items to use `isOpeningTag` feature of `TagStack`
-    // Otherwise had to manually check it by calling some util function eg. `Utils.isOpeningTag(item)`
-    stack.push(item);
-    if (stack.isOpeningTag) {
-      const [tagName, textContent] = stack.current.split(">");
+    // Pushing closing tags into the stack to use `isOpeningTag` feature of `TagStack`
+    // Otherwise had to manually check it by calling some util function eg. `Utils.isOpeningTag(string)`
+    rawTagStack.push(string);
+    if (rawTagStack.isOpeningTag) {
+      const [tagName, textContent] = rawTagStack.current.split(">");
       // console.log("Append ====>", tagName, textContent);
 
       const tagElement = document.createElement(tagName);
       tagElement.textContent = textContent.trim();
-      // Don't push the parent, they will be added to root at script.js
-      if (currentParentStack.current)
-        currentParentStack.current.appendChild(tagElement);
-      currentParentStack.push(tagElement);
-      // currentParent = tagElement;
+      // We won't append the topmost parent of the JSX to anyone here, it will be added to root at script.js
+      if (domElementStack.current)
+        domElementStack.current.appendChild(tagElement);
+      domElementStack.push(tagElement);
     } else {
-      stack.pop();
-      stack.pop();
-      currentParent = currentParentStack.pop();
-
-      // const tagWithChildren = stack.pop();
-      // const [tagName, children] = tagWithChildren.split(">");
-      // console.log("Append ====>", tagName, children);
-
-      // It's easier to create here, otherwise we would have to push it somewhere. Which would take up spaces
-      // Pushing string is space efficient than pushing DOM element
-      // const tagElement = document.createElement(tagName);
-      // tagElement.textContent = children;
-      // currentParent.appendChild(tagElement);
+      rawTagStack.pop();
+      rawTagStack.pop();
+      currentParent = domElementStack.pop();
     }
-    // console.log(stack.list, stack.hierarchyLevel);
   });
 
   return currentParent;
-  // return compiledJSX;
 }

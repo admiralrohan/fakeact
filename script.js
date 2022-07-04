@@ -1,6 +1,17 @@
-const root = document.createElement("div");
-root.id = "root";
-document.body.appendChild(root);
+// class FakeactDOM {
+//   static createRoot(element) {
+//     this.root = element;
+//     return new this();
+//   }
+
+//   render(element) {
+//     const compiledJSX = getCompiledJSX(element);
+//     this.root.appendChild(compiledJSX);
+//   }
+// }
+
+// const root = FakeactDOM.createRoot(document.getElementById("root"));
+const root = document.getElementById("root");
 
 let count = 1;
 const increment = () => {
@@ -31,8 +42,9 @@ function Counter() {
   // 					<button>Click me</button>`;
 
   // return `<div><span>Hi</span><button>Click me</button></div>`;
-  // Start
   return `<div>
+						<p>Start
+						</p>a
   					<span>
 							Hi
 						</span>
@@ -55,8 +67,9 @@ function Counter() {
 }
 
 const counterComponent = Counter();
-const compiledJSX = getCompiledJSX(root, counterComponent);
-console.log("Compiled:", compiledJSX);
+// root.render(counterComponent);
+const compiledJSX = getCompiledJSX(counterComponent);
+// console.log("Compiled:", compiledJSX);
 root.appendChild(compiledJSX);
 
 // <Counter />
